@@ -11,7 +11,7 @@ const championsData = [
             { skinName: "Tiệc bãi biển", downloadLink: "#", img: "https://dl.ops.kgtw.garenanow.com/CHT/HeroTrainingLoadingNew_B36/13008.jpg" },
             { skinName: "Mỵ hồ", downloadLink: "#", img: "https://dl.ops.kgtw.garenanow.com/CHT/HeroTrainingLoadingNew_B36/13009.jpg" },
             { skinName: "Đặc công tử điệp", downloadLink: "#", img: "https://dl.ops.kgtw.garenanow.com/CHT/HeroTrainingLoadingNew_B36/13010.jpg" },
-            { skinName: "Bích Hải thánh nữ", downloadLink: "#", img: "https://dl.ops.kgtw.garenanow.com/CHT/HeroTrainingLoadingNew_B36/13011.jpg" },
+            { skinName: "Bích Hải thánh nữ", downloadLink: "https://link4m.org/go/dl1en", img: "https://dl.ops.kgtw.garenanow.com/CHT/HeroTrainingLoadingNew_B36/13011.jpg" },
             { skinName: "Lễ hội mùa xuân", downloadLink: "#", img: "https://dl.ops.kgtw.garenanow.com/CHT/HeroTrainingLoadingNew_B36/13012.jpg" },
             { skinName: "Thánh nữ Xiêm La", downloadLink: "#", img: "https://dl.ops.kgtw.garenanow.com/CHT/HeroTrainingLoadingNew_B36/13013.jpg" },
             { skinName: "Thứ nguyên Vệ thần", downloadLink: "#", img: "https://dl.ops.kgtw.garenanow.com/CHT/HeroTrainingLoadingNew_B36/13015.jpg" },
