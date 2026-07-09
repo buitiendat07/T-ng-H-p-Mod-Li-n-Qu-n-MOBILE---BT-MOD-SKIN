@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mod Skin Liên Quân</title>
+    <!-- Nhúng Google Fonts, FontAwesome và File Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="header">
+        <h1>★ Mod Skin <span>Liên Quân</span></h1>
+        <p>Kho tàng skin mod độc đáo cho mọi tướng</p>
+    </div>
+
+    <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchBar" placeholder="Tìm kiếm tên tướng hoặc skin...">
+    </div>
+
+    <a href="https://youtube.com" target="_blank" class="btn-guide">
+        <i class="fa-solid fa-play"></i> Hướng dẫn cài mod
+    </a>
+
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterClass('all', this)">Tất Cả</button>
+        <button class="filter-btn" onclick="filterClass('xa-thu', this)">Xạ Thủ</button>
+        <button class="filter-btn" onclick="filterClass('phap-su', this)">Pháp Sư</button>
+        <button class="filter-btn" onclick="filterClass('dau-si', this)">Đấu Sĩ</button>
+        <button class="filter-btn" onclick="filterClass('sat-thu', this)">Sát Thủ</button>
+    </div>
+
+    <div class="result-count" id="resultCount">0 tướng được tìm thấy</div>
+
+    <div class="grid-container" id="championsGrid"></div>
+
+    <!-- Hộp thoại hiển thị Link Tải -->
+    <div class="modal" id="skinModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle" style="margin-bottom: 15px;">Tên Tướng</h3>
+            <div id="modalLinks"></div>
+        </div>
+    </div>
+
+    <!-- NẠP DỮ LIỆU TỪ FILE data.js VÀO TRANG WEB -->
+    <script src="data.js"></script>
+    
+    <!-- Code xử lý logic Tìm kiếm / Bộ lọc -->
+    <script>
+        let currentClassFilter = 'all';
+
+        function displayChampions() {
+            const grid = document.getElementById('championsGrid');
+            const searchTxt = document.getElementById('searchBar').value.toLowerCase();
+            grid.innerHTML = "";
+            let count = 0;
+
+            championsData.forEach(champ => {
+                const matchesClass = (currentClassFilter === 'all' || champ.class === currentClassFilter);
+                const matchesSearch = champ.name.toLowerCase().includes(searchTxt) || 
+                                      champ.skins.some(s => s.skinName.toLowerCase().includes(searchTxt));
+
+                if (matchesClass && matchesSearch) {
+                    count++;
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.onclick = () => openModal(champ);
+                    card.innerHTML = `
+                        <img src="${champ.img}" alt="${champ.name}">
+                        <div class="name">${champ.name}</div>
+                        <span class="badge ${champ.class}">${champ.className}</span>
+                        <div class="skin-count">${champ.skins.length} skin</div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+            document.getElementById('resultCount').innerText = `${count} tướng được tìm thấy`;
+        }
+
+        function filterClass(className, buttonElement) {
+            currentClassFilter = className;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+            displayChampions();
+        }
+
+        document.getElementById('searchBar').addEventListener('input', displayChampions);
+
+        function openModal(champ) {
+            document.getElementById('modalTitle').innerText = `Skin Mod cho ${champ.name}`;
+            const linksContainer = document.getElementById('modalLinks');
+            linksContainer.innerHTML = "";
+            champ.skins.forEach(skin => {
+                const a = document.createElement('a');
+                a.href = skin.downloadLink;
+                a.target = "_blank";
+                a.className = "skin-link-btn";
+                const imgSrc = skin.img || champ.img;
+                a.innerHTML = `
+                    <img class="skin-thumb" src="${imgSrc}" alt="${skin.skinName}" loading="lazy" onerror="this.style.display='none'">
+                    <span class="skin-link-text"><i class="fa-solid fa-download"></i> ${skin.skinName}</span>
+                `;
+                linksContainer.appendChild(a);
+            });
+            document.getElementById('skinModal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('skinModal').style.display = 'none'; }
+        window.onclick = function(event) {
+            const modal = document.getElementById('skinModal');
+            if (event.target == modal) { modal.style.display = 'none'; }
+        }
+
+        displayChampions();
+    </script>
+</body>
+</html>
